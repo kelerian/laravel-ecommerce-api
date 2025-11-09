@@ -64,7 +64,7 @@
 
 
 
-# Docker compose сборка взята с [репозитория](https://github.com/rw4lll/laravel-docker-examples.git).
+## Docker compose сборка взята с [репозитория](https://github.com/rw4lll/laravel-docker-examples.git).
 
 
 ## 🐳 Запуск проекта (Docker)
