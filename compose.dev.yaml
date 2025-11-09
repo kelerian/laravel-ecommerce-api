@@ -1,0 +1,178 @@
+services:
+  web:
+    image: nginx:latest # Using the default Nginx image with custom configuration.
+    volumes:
+      # Mount the application code for live updates
+      - ./:/var/www
+      # Mount the Nginx configuration file
+      - ./docker/development/nginx/nginx.conf:/etc/nginx/nginx.conf:ro
+    ports:
+      # Map port 80 inside the container to the port specified by 'NGINX_PORT' on the host machine
+      - "80:80"
+    environment:
+      - NGINX_HOST=localhost
+    networks:
+      - laravel-development-2
+    depends_on:
+      php-fpm:
+        condition: service_started  # Wait for php-fpm to start
+
+  php-fpm:
+    # For the php-fpm service, we will create a custom image to install the necessary PHP extensions and setup proper permissions.
+    build:
+      context: .
+      dockerfile: ./docker/common/php-fpm/Dockerfile
+      target: development
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+        XDEBUG_ENABLED: ${XDEBUG_ENABLED:-true}
+        XDEBUG_MODE: develop,coverage,debug,profile
+        XDEBUG_HOST: ${XDEBUG_HOST:-host.docker.internal}
+        XDEBUG_IDE_KEY: ${XDEBUG_IDE_KEY:-DOCKER}
+        XDEBUG_LOG: /dev/stdout
+        XDEBUG_LOG_LEVEL: 0
+    env_file:
+      # Load the environment variables from the Laravel application
+      - .env
+    user: "${UID:-1000}:${GID:-1000}"
+    volumes:
+      # Mount the application code for live updates
+      - ./:/var/www
+      - ./docker/common/php-fpm/conf.d/custom.ini:/usr/local/etc/php/conf.d/custom.ini:ro
+    networks:
+      - laravel-development-2
+    depends_on:
+      postgres:
+        condition: service_started  # Wait for postgres to start
+      rabbitmq:
+        condition: service_started
+      elasticsearch:
+        condition: service_healthy
+      
+
+  workspace:
+   # For the workspace service, we will also create a custom image to install and setup all the necessary stuff.
+    build:
+      context: .
+      dockerfile: ./docker/development/workspace/Dockerfile
+      args:
+        UID: ${UID:-1000}
+        GID: ${GID:-1000}
+        XDEBUG_ENABLED: ${XDEBUG_ENABLED:-true}
+        XDEBUG_MODE: develop,coverage,debug,profile
+        XDEBUG_HOST: ${XDEBUG_HOST:-host.docker.internal}
+        XDEBUG_IDE_KEY: ${XDEBUG_IDE_KEY:-DOCKER}
+        XDEBUG_LOG: /dev/stdout
+        XDEBUG_LOG_LEVEL: 0
+    ports:
+      - '${VITE_PORT:-5174}:5173'
+    tty: true  # Enables an interactive terminal
+    stdin_open: true  # Keeps standard input open for 'docker exec'
+    env_file:
+      - .env
+    volumes:
+      - ./:/var/www
+    networks:
+      - laravel-development-2
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+    
+
+  postgres:
+    image: postgres:16
+    ports:
+      - "${POSTGRES_PORT:-5433}:5432"
+    environment:
+      - POSTGRES_DB=app
+      - POSTGRES_USER=laravel
+      - POSTGRES_PASSWORD=secret
+    volumes:
+      - postgres-data-development:/var/lib/postgresql/data
+    networks:
+      - laravel-development-2
+
+  redis:
+    image: redis:alpine
+    networks:
+      - laravel-development-2
+  
+  rabbitmq:
+    image: rabbitmq:3.13-management
+    restart: unless-stopped
+    ports:
+      - "5673:5672"   # AMQP protocol
+      - "15673:15672" # Management UI
+    environment:
+      RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER:-guest}
+      RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS:-guest}
+      RABBITMQ_DEFAULT_VHOST: /
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - laravel-development-2
+  
+  elasticsearch:
+    image: elasticsearch:8.11.0
+  
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false
+      - ES_JAVA_OPTS=-Xms512m -Xmx512m
+      - cluster.name=laravel-cluster
+      - bootstrap.memory_lock=true
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
+    volumes:
+      - elasticsearch_data:/usr/share/elasticsearch/data
+    ports:
+      - "9201:9200"
+      - "9301:9300"
+    networks:
+      - laravel-development-2
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:9200"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+      start_period: 40s
+    ulimits:
+      memlock:
+        soft: -1
+        hard: -1
+    mem_limit: 1g
+
+  kibana:
+     image: kibana:8.11.0
+     environment:
+       - ELASTICSEARCH_HOSTS=http://elasticsearch:9200
+       - SERVER_NAME=kibana.localhost
+       - SERVER_HOST=0.0.0.0
+       - NODE_OPTIONS=--max-old-space-size=2048  
+     ports:
+       - "5602:5601"
+     networks:
+       - laravel-development-2
+     depends_on:
+       elasticsearch:
+         condition: service_healthy
+     healthcheck:
+       test: ["CMD", "curl", "-f", "http://localhost:5601/api/status"]
+       interval: 30s
+       timeout: 10s
+       retries: 5
+       start_period: 60s
+     mem_limit: 2g  
+     deploy:
+       resources:
+         limits:
+           memory: 2G
+
+networks:
+  laravel-development-2:
+
+volumes:
+  postgres-data-development:
+  rabbitmq_data:
+  elasticsearch_data:
+

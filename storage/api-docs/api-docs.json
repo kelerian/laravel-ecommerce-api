@@ -1,0 +1,2176 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Api version 1",
+        "description": "Laravel project API",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "email": "contact@example.com"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "/api"
+        }
+    ],
+    "paths": {
+        "/v1/auth/register": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Регистрация",
+                "operationId": "9e927f01aff4a0cfb8fd34e3b9f744d3",
+                "requestBody": {
+                    "description": "Параметры аккаунта",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "name",
+                                    "lastname",
+                                    "birthday",
+                                    "phone",
+                                    "address",
+                                    "gender",
+                                    "password",
+                                    "password_confirmation",
+                                    "title",
+                                    "company_address",
+                                    "inn",
+                                    "fuser_id"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "Адрес электронной почты",
+                                        "type": "string",
+                                        "default": "@mail.ru"
+                                    },
+                                    "name": {
+                                        "description": "Имя",
+                                        "type": "string",
+                                        "default": "John"
+                                    },
+                                    "lastname": {
+                                        "description": "Фамилия",
+                                        "type": "string",
+                                        "default": "Doe"
+                                    },
+                                    "birthday": {
+                                        "description": "дата рождения",
+                                        "type": "string",
+                                        "default": "1990-05-15"
+                                    },
+                                    "phone": {
+                                        "description": "Номер мобильного телефона",
+                                        "type": "string",
+                                        "default": "+********"
+                                    },
+                                    "address": {
+                                        "description": "Адрес",
+                                        "type": "string",
+                                        "default": "город Москва, улица Ленина, дом 4"
+                                    },
+                                    "gender": {
+                                        "description": "Пол, female - женский, male - мужской",
+                                        "type": "string",
+                                        "default": "",
+                                        "enum": [
+                                            "female",
+                                            "male"
+                                        ]
+                                    },
+                                    "password": {
+                                        "description": "Пароль",
+                                        "type": "string",
+                                        "default": "12345qQ_"
+                                    },
+                                    "password_confirmation": {
+                                        "description": "Повторите пароль",
+                                        "type": "string",
+                                        "default": "12345qQ_"
+                                    },
+                                    "title": {
+                                        "description": "Название компании",
+                                        "type": "string",
+                                        "default": "ООО Луна"
+                                    },
+                                    "company_address": {
+                                        "description": "Адрес компании",
+                                        "type": "string",
+                                        "default": "город Москва, улица Ленина, дом 4"
+                                    },
+                                    "inn": {
+                                        "description": "Инн компании (12 цифр)",
+                                        "type": "string",
+                                        "default": ""
+                                    },
+                                    "fuser_id": {
+                                        "description": "айди фусер",
+                                        "type": "string",
+                                        "default": ""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "created",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "fail"
+                    }
+                }
+            }
+        },
+        "/v1/auth/refreshToken": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Обновить токен",
+                "operationId": "59394565e6bba117bb4bd136f583d77a",
+                "responses": {
+                    "201": {
+                        "description": "created",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthenticated"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/auth/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Авторизация",
+                "operationId": "4e02647a4aa6dcc333d4badf4e370119",
+                "requestBody": {
+                    "description": "Параметры аккаунта",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "password"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "Адрес электронной почты",
+                                        "type": "string",
+                                        "default": "@mail.ru"
+                                    },
+                                    "password": {
+                                        "description": "Пароль",
+                                        "type": "string",
+                                        "default": "12345qQ_"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "fail"
+                    }
+                }
+            }
+        },
+        "/v1/auth/logout": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Выход из аккаунта",
+                "operationId": "ebf6b65b3067ff9aa1e7be396d5993c8",
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/cart": {
+            "get": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "",
+                "operationId": "ad46e5219ecd294f352523eab86d1923",
+                "parameters": [
+                    {
+                        "name": "fuser",
+                        "in": "header",
+                        "description": "айди неавторизованного юзера"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "Добавить товар в корзину",
+                "operationId": "8a5114c7b173e67f23140e3395fec26f",
+                "parameters": [
+                    {
+                        "name": "fuser",
+                        "in": "header",
+                        "description": "айди неавторизованного юзера"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Корзина, добавление",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [],
+                                "properties": {
+                                    "products": {
+                                        "description": "Список товаров с количеством",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 12
+                                                },
+                                                "quantity": {
+                                                    "type": "integer",
+                                                    "example": 3
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "fail"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Cart"
+                ],
+                "summary": "Удаление из корзины",
+                "operationId": "8d598d9a2bc58772a6e1c3c31e05f3fb",
+                "parameters": [
+                    {
+                        "name": "fuser",
+                        "in": "header",
+                        "description": "айди неавторизованного юзера"
+                    },
+                    {
+                        "name": "all",
+                        "in": "query",
+                        "description": "флаг удаления (true = очистить всю корзину)"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Данные для обновления (только изменяемые поля)",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [],
+                                "properties": {
+                                    "products": {
+                                        "description": "Список товаров",
+                                        "type": "array",
+                                        "items": {
+                                            "properties": {
+                                                "id": {
+                                                    "type": "integer",
+                                                    "example": 12
+                                                }
+                                            },
+                                            "type": "object"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Deleted successfully"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/catalog": {
+            "get": {
+                "tags": [
+                    "Catalog"
+                ],
+                "summary": "catalog list",
+                "operationId": "6d5675517445efda997387d5d2f0e2ce",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "page number"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "news limit"
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "параметр сортировки (price,date,stock)"
+                    },
+                    {
+                        "name": "direction",
+                        "in": "query",
+                        "description": "параметр сортировки (asc,desc)"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Catalog"
+                ],
+                "summary": "Создание товара",
+                "description": "Создание нового товара.",
+                "operationId": "fa88699c275219d547fdadb472ccba37",
+                "requestBody": {
+                    "description": "Данные для создания товара",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [],
+                                "properties": {
+                                    "title": {
+                                        "description": "Название товара",
+                                        "type": "string",
+                                        "maxLength": 100,
+                                        "minLength": 2,
+                                        "example": "Новое название товара"
+                                    },
+                                    "description": {
+                                        "description": "Описание товара",
+                                        "type": "string",
+                                        "minLength": 5,
+                                        "example": "Подробное описание товара"
+                                    },
+                                    "preview_picture": {
+                                        "description": "Картинка превью (до 10MB, jpeg,png,jpg,gif,svg)",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "images[]": {
+                                        "description": "Дополнительные изображения (максимум 10 файлов)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    },
+                                    "price_opt": {
+                                        "description": "Оптовая цена (число, минимум 0)",
+                                        "type": "number",
+                                        "format": "float",
+                                        "minimum": 0,
+                                        "example": 1500.5
+                                    },
+                                    "price_special": {
+                                        "description": "Специальная цена (число, минимум 0)",
+                                        "type": "number",
+                                        "format": "float",
+                                        "minimum": 0,
+                                        "example": 1200
+                                    },
+                                    "price_rozn": {
+                                        "description": "Розничная цена (число, минимум 0)",
+                                        "type": "number",
+                                        "format": "float",
+                                        "minimum": 0,
+                                        "example": 2000
+                                    },
+                                    "stock_ivanovo": {
+                                        "description": "Количество на складе Иваново (целое число, минимум 0)",
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "example": 25
+                                    },
+                                    "stock_moskov": {
+                                        "description": "Количество на складе Москва (целое число, минимум 0)",
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "example": 15
+                                    },
+                                    "stock_krasnodar": {
+                                        "description": "Количество на складе Краснодар (целое число, минимум 0)",
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "example": 30
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "created",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "товар создан"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Товар не найден"
+                    },
+                    "422": {
+                        "description": "Ошибка валидации"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/catalog/{slug}": {
+            "get": {
+                "tags": [
+                    "Catalog"
+                ],
+                "summary": "catalog element detail",
+                "operationId": "d1aec0b646fdb31ab86261486e5ccfa8",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "product slug"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Catalog"
+                ],
+                "summary": "Обновить указанные поля товара",
+                "description": "Обновляет только переданные поля товара. Для обновления цен и остатков используйте соответствующие поля.",
+                "operationId": "cce2d1a14628ea0727e9a9324fc0959a",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Символьный код товара",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "nazvanie-tovara"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Данные для обновления (только изменяемые поля)",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [],
+                                "properties": {
+                                    "title": {
+                                        "description": "Название товара",
+                                        "type": "string",
+                                        "maxLength": 100,
+                                        "minLength": 2,
+                                        "example": "Новое название товара"
+                                    },
+                                    "description": {
+                                        "description": "Описание товара",
+                                        "type": "string",
+                                        "minLength": 5,
+                                        "example": "Обновлённое подробное описание товара"
+                                    },
+                                    "preview_picture": {
+                                        "description": "Картинка превью (до 10MB, jpeg,png,jpg,gif,svg)",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "images[]": {
+                                        "description": "Дополнительные изображения (максимум 10 файлов)",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string",
+                                            "format": "binary"
+                                        }
+                                    },
+                                    "price_opt": {
+                                        "description": "Оптовая цена (число, минимум 0)",
+                                        "type": "number",
+                                        "format": "float",
+                                        "minimum": 0,
+                                        "example": 1500.5
+                                    },
+                                    "price_special": {
+                                        "description": "Специальная цена (число, минимум 0)",
+                                        "type": "number",
+                                        "format": "float",
+                                        "minimum": 0,
+                                        "example": 1200
+                                    },
+                                    "price_rozn": {
+                                        "description": "Розничная цена (число, минимум 0)",
+                                        "type": "number",
+                                        "format": "float",
+                                        "minimum": 0,
+                                        "example": 2000
+                                    },
+                                    "stock_ivanovo": {
+                                        "description": "Количество на складе Иваново (целое число, минимум 0)",
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "example": 25
+                                    },
+                                    "stock_moskov": {
+                                        "description": "Количество на складе Москва (целое число, минимум 0)",
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "example": 15
+                                    },
+                                    "stock_krasnodar": {
+                                        "description": "Количество на складе Краснодар (целое число, минимум 0)",
+                                        "type": "integer",
+                                        "minimum": 0,
+                                        "example": 30
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Обновлено",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "товар обновлен"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Товар не найден"
+                    },
+                    "422": {
+                        "description": "Ошибка валидации"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Catalog"
+                ],
+                "summary": "Удалить товар",
+                "operationId": "ad8b0c554aaa4635cc45e535cfc5e747",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Символьный код товара"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted successfully"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/media": {
+            "delete": {
+                "tags": [
+                    "Media"
+                ],
+                "summary": "Удалить картинки из выбранной модели",
+                "operationId": "5df5a8226d1265ddaf8b9d84b1a65483",
+                "requestBody": {
+                    "description": "Удаление изображений",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "model_type": {
+                                        "description": "Тип модели",
+                                        "type": "string",
+                                        "enum": [
+                                            "news",
+                                            "products",
+                                            "users"
+                                        ],
+                                        "example": "news"
+                                    },
+                                    "id_model": {
+                                        "description": "ID элемента модели",
+                                        "type": "integer",
+                                        "example": 42
+                                    },
+                                    "image_id": {
+                                        "description": "ID изображения",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "integer"
+                                        },
+                                        "example": [
+                                            1,
+                                            2,
+                                            3
+                                        ]
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Deleted successfully"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/news": {
+            "get": {
+                "tags": [
+                    "News"
+                ],
+                "summary": "news list",
+                "operationId": "31dcc9f6a1eb0da02d06f2b20e43d4e3",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "page number"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "news limit"
+                    },
+                    {
+                        "name": "user_email",
+                        "in": "query",
+                        "description": "емайл криейтера новости"
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "параметр сортировки"
+                    },
+                    {
+                        "name": "direction",
+                        "in": "query",
+                        "description": "параметр сортировки"
+                    },
+                    {
+                        "name": "date_from",
+                        "in": "query",
+                        "description": "дата от (1990-05-15)"
+                    },
+                    {
+                        "name": "date_to",
+                        "in": "query",
+                        "description": "дата до (1990-05-15)"
+                    },
+                    {
+                        "name": "tags[]",
+                        "in": "query",
+                        "description": "Список slug тегов. Пример: ?tags[]=impedit&tags[]=non",
+                        "required": false,
+                        "style": "form",
+                        "explode": true,
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "type": "string",
+                                "example": "impedit"
+                            }
+                        }
+                    },
+                    {
+                        "name": "tags_flag",
+                        "in": "query",
+                        "description": "флаг: true - у новости должны быть только переданные теги, false - один из тегов",
+                        "required": false,
+                        "schema": {
+                            "type": "boolean",
+                            "enum": [
+                                true,
+                                false
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "News"
+                ],
+                "summary": "Добавить новость",
+                "operationId": "13db4276bce4f49ebf340c0cafabccd8",
+                "requestBody": {
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [],
+                                "properties": {
+                                    "title": {
+                                        "description": "Название новости",
+                                        "type": "string",
+                                        "default": ""
+                                    },
+                                    "content": {
+                                        "description": "Текст",
+                                        "type": "string",
+                                        "default": ""
+                                    },
+                                    "detail_picture": {
+                                        "description": "Детальная картинка",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "preview_picture": {
+                                        "description": "Картинка превью",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "images[]": {
+                                        "description": "Массив изображений",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "file",
+                                            "format": "binary"
+                                        }
+                                    },
+                                    "tags": {
+                                        "description": "теги",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "created",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "fail"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/news/{slug}": {
+            "get": {
+                "tags": [
+                    "News"
+                ],
+                "summary": "news by slug",
+                "operationId": "d8d63491d4280161ab375527a74ccaa1",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "new slug"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "News"
+                ],
+                "summary": "Обновить указанные поля новости",
+                "operationId": "c5d594c5d6122df7a896df063d8f2a72",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Символьный код новости"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Данные для обновления (только изменяемые поля)",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "properties": {
+                                    "title": {
+                                        "description": "Название новости",
+                                        "type": "string",
+                                        "example": "Новое название"
+                                    },
+                                    "content": {
+                                        "description": "Текст новости",
+                                        "type": "string",
+                                        "example": "Обновлённый текст"
+                                    },
+                                    "detail_picture": {
+                                        "description": "Детальная картинка",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "preview_picture": {
+                                        "description": "Картинка превью",
+                                        "type": "string",
+                                        "format": "binary"
+                                    },
+                                    "images[]": {
+                                        "description": "Дополнительные изображения",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "file",
+                                            "format": "binary"
+                                        }
+                                    },
+                                    "tags": {
+                                        "description": "теги",
+                                        "type": "array",
+                                        "items": {
+                                            "type": "string"
+                                        }
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "updated new"
+                                        },
+                                        "data": {
+                                            "type": "object"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "Unauthorized"
+                    },
+                    "403": {
+                        "description": "Forbidden"
+                    },
+                    "404": {
+                        "description": "Новость не найдена"
+                    },
+                    "422": {
+                        "description": "Ошибка валидации"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "News"
+                ],
+                "summary": "Удалить новость",
+                "operationId": "3ce9bcaa45bfdcd40bbcbcd5a2507f78",
+                "parameters": [
+                    {
+                        "name": "slug",
+                        "in": "path",
+                        "description": "Символьный код новости"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Deleted successfully"
+                    },
+                    "404": {
+                        "description": "Not found"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/order/cart": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Заказ для оформления",
+                "operationId": "d6650b6b61c97356d91c92496ef635f5",
+                "parameters": [
+                    {
+                        "name": "fuser",
+                        "in": "header",
+                        "description": "fuser id"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "fail"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/order/{id}/cancel": {
+            "patch": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Отмена заказа",
+                "operationId": "1dbbd3c5a7ad167977b718c486d12983",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id заказа"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "order cancelled",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "status": {
+                                            "description": "Новый статус заказа",
+                                            "type": "string",
+                                            "example": "canceled"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Ошибка отмены заказа"
+                    },
+                    "404": {
+                        "description": "Заказ не найден"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/order": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "order list",
+                "operationId": "d5ed98599f01fe6b450c12b6884f7de8",
+                "parameters": [
+                    {
+                        "name": "all_orders",
+                        "in": "query",
+                        "description": "Показать все заказы (только для админов) (true/false, параметр необязательный)"
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "page number"
+                    },
+                    {
+                        "name": "limit",
+                        "in": "query",
+                        "description": "news limit"
+                    },
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "емайл в заказе"
+                    },
+                    {
+                        "name": "user_id",
+                        "in": "query",
+                        "description": "id пользователя (только для администраторов)"
+                    },
+                    {
+                        "name": "pay_type",
+                        "in": "query",
+                        "description": "тип оплаты (offline, online)"
+                    },
+                    {
+                        "name": "order_status",
+                        "in": "query",
+                        "description": "ордер статус "
+                    },
+                    {
+                        "name": "sort",
+                        "in": "query",
+                        "description": "параметр сортировки"
+                    },
+                    {
+                        "name": "direction",
+                        "in": "query",
+                        "description": "параметр сортировки"
+                    },
+                    {
+                        "name": "date_from",
+                        "in": "query",
+                        "description": "дата от (1990-05-15)"
+                    },
+                    {
+                        "name": "date_to",
+                        "in": "query",
+                        "description": "дата до (1990-05-15)"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Создание заказа",
+                "operationId": "6b3da2b4f0e95b3a192ca6dbffa6f47d",
+                "requestBody": {
+                    "description": "Параметры заказа",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "email",
+                                    "phone",
+                                    "address",
+                                    "pay_type",
+                                    "fuser_id"
+                                ],
+                                "properties": {
+                                    "email": {
+                                        "description": "Адрес электронной почты",
+                                        "type": "string",
+                                        "default": "@mail.ru"
+                                    },
+                                    "phone": {
+                                        "description": "Номер мобильного телефона",
+                                        "type": "string",
+                                        "default": "+********"
+                                    },
+                                    "address": {
+                                        "description": "Адрес",
+                                        "type": "string",
+                                        "default": "город Москва, улица Ленина, дом 4"
+                                    },
+                                    "pay_type": {
+                                        "description": "Тип оплаты",
+                                        "type": "string",
+                                        "default": "",
+                                        "enum": [
+                                            "online",
+                                            "offline"
+                                        ]
+                                    },
+                                    "fuser_id": {
+                                        "description": "айди фусер",
+                                        "type": "string",
+                                        "default": ""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "created",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "fail"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/order/repeat": {
+            "post": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Повторить заказ, кладет товары из заказа в корзину",
+                "operationId": "e76e37abf09deeb555ace6694a9d84eb",
+                "parameters": [
+                    {
+                        "name": "fuser",
+                        "in": "header",
+                        "description": "fuser_id"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Параметры заказа",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [],
+                                "properties": {
+                                    "order_id": {
+                                        "description": "id заказа",
+                                        "type": "string",
+                                        "default": ""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "fail"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/order/statuses": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "",
+                "operationId": "31a21290e0e8557aa39421ebec26c255",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/order/pay-types": {
+            "get": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "",
+                "operationId": "2fa95a050da0a0ce8db92c9447513d1d",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/order/{id}/change-status": {
+            "patch": {
+                "tags": [
+                    "Orders"
+                ],
+                "summary": "Обновление статуса заказа для администраторов",
+                "operationId": "dc97b9976e9c0e237c1f872462a8482f",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "order id"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Данные для обновления (только изменяемые поля)",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "status": {
+                                        "type": "string",
+                                        "example": "prinyat"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Order status changed"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "500": {
+                        "description": "database error"
+                    },
+                    "422": {
+                        "description": "Validation error or invalid status transition"
+                    },
+                    "403": {
+                        "description": "To change the order status, you must have the \"administrator\" status"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/profile": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "профили юзера",
+                "operationId": "29d38ca8c9484ccda8fafeb87a121131",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            },
+            "post": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Добавить профиль",
+                "operationId": "df580409ea8b40f4db429b0212e14cb7",
+                "requestBody": {
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [
+                                    "phone",
+                                    "title",
+                                    "address",
+                                    "inn"
+                                ],
+                                "properties": {
+                                    "phone": {
+                                        "description": "Номер мобильного телефона",
+                                        "type": "string",
+                                        "default": "+********"
+                                    },
+                                    "title": {
+                                        "description": "Название компании",
+                                        "type": "string",
+                                        "default": "ООО Луна"
+                                    },
+                                    "address": {
+                                        "description": "Адрес компании",
+                                        "type": "string",
+                                        "default": "город Москва, улица Ленина, дом 4"
+                                    },
+                                    "inn": {
+                                        "description": "Инн компании (12 цифр)",
+                                        "type": "string",
+                                        "default": ""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "created",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "fail"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/profile/{inn}": {
+            "get": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "профиль",
+                "operationId": "0b72b42f0ec3555d2117c06171b780ef",
+                "parameters": [
+                    {
+                        "name": "inn",
+                        "in": "path",
+                        "description": "inn компании"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            },
+            "delete": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Удалить профиль",
+                "operationId": "53a748494ee88af13d2f9ea1b853f8ed",
+                "parameters": [
+                    {
+                        "name": "inn",
+                        "in": "path",
+                        "description": "inn компании"
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "deleted"
+                    },
+                    "404": {
+                        "description": "not found"
+                    },
+                    "401": {
+                        "description": "Unauthenticated",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "Profile"
+                ],
+                "summary": "Обновить указанные поля",
+                "operationId": "2053a066c2790cab49b575e45ef2c2a5",
+                "parameters": [
+                    {
+                        "name": "inn",
+                        "in": "path",
+                        "description": "inn компании"
+                    }
+                ],
+                "requestBody": {
+                    "description": "Данные для обновления (только изменяемые поля)",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "inn": {
+                                        "type": "string",
+                                        "example": "111111111111"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Москва"
+                                    },
+                                    "title": {
+                                        "type": "string",
+                                        "example": "АО Пятерочка"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "+70000000000"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Profile data updated"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "500": {
+                        "description": "database error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/search": {
+            "get": {
+                "tags": [
+                    "Search"
+                ],
+                "summary": "search news",
+                "operationId": "0d72c32087a6aea925e33545e4eac053",
+                "parameters": [
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "page number"
+                    },
+                    {
+                        "name": "perPage",
+                        "in": "query",
+                        "description": "news limit"
+                    },
+                    {
+                        "name": "q",
+                        "in": "query",
+                        "description": "емайл криейтера новости"
+                    },
+                    {
+                        "name": "search_type",
+                        "in": "query",
+                        "description": "fulltext или autocomplete"
+                    },
+                    {
+                        "name": "models_type",
+                        "in": "query",
+                        "description": "product или news"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/testAuth/": {
+            "get": {
+                "tags": [
+                    "Traning"
+                ],
+                "summary": "",
+                "operationId": "940ec41e1bb17b30c2d2dbed25eea031",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/tags": {
+            "get": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "tags list",
+                "operationId": "068cdbd1668890a4a91fac19790354db",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Tags"
+                ],
+                "summary": "Добавить тэг",
+                "operationId": "ce1207451477eca6605153ef85c5dbec",
+                "requestBody": {
+                    "description": "",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [],
+                                "properties": {
+                                    "title": {
+                                        "description": "Название новости",
+                                        "type": "string",
+                                        "default": ""
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "created",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "fail"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            }
+        },
+        "/testController/": {
+            "get": {
+                "tags": [
+                    "Traning"
+                ],
+                "summary": "",
+                "operationId": "f352512e2da2d29b571ded82e4bef9f2",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/testControllerAll/": {
+            "get": {
+                "tags": [
+                    "Traning"
+                ],
+                "summary": "",
+                "operationId": "61dffde4088c8644a246014c2d96e55c",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/testControllerImageNew/{news}": {
+            "post": {
+                "tags": [
+                    "Traning"
+                ],
+                "summary": "Создать новость",
+                "operationId": "2f1c8bb69f5b2e4cb2391f60a52d29ba",
+                "parameters": [
+                    {
+                        "name": "news",
+                        "in": "path",
+                        "description": "id new",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "description": "новости",
+                    "required": true,
+                    "content": {
+                        "multipart/form-data": {
+                            "schema": {
+                                "required": [],
+                                "properties": {
+                                    "file": {
+                                        "description": "Файл",
+                                        "type": "string",
+                                        "format": "binary"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "fail"
+                    }
+                }
+            }
+        },
+        "/test/{id}": {
+            "get": {
+                "tags": [
+                    "Traning"
+                ],
+                "summary": "",
+                "operationId": "e6998f9f3efaf0b5db41384bd74a72ee",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "id new",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/v1/user/data": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "данные юзера",
+                "operationId": "f15551c246e6ab9dbc4c6c26da6b7896",
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            },
+            "patch": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Обновить указанные поля",
+                "operationId": "7b556260973412ba9f3e6b93b663c976",
+                "requestBody": {
+                    "description": "Данные для обновления (только изменяемые поля)",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "name": {
+                                        "type": "string",
+                                        "example": "Иван"
+                                    },
+                                    "lastname": {
+                                        "type": "string",
+                                        "example": "Ефремов"
+                                    },
+                                    "gender_slug": {
+                                        "type": "string",
+                                        "example": "male"
+                                    },
+                                    "birthday": {
+                                        "type": "string",
+                                        "example": "1990-05-15"
+                                    },
+                                    "address": {
+                                        "type": "string",
+                                        "example": "Москва"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "updated",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Личные данные обновлены"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "401": {
+                        "description": "unauthorized"
+                    },
+                    "500": {
+                        "description": "database error"
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            }
+        },
+        "/v1/user/{email}/user-data": {
+            "get": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Получить данные пользователя по email(для администраторов)",
+                "operationId": "e34d74c2eef31d0fd06041fba0cb1a3f",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "path",
+                        "description": "email пользователя"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {}
+                            }
+                        }
+                    }
+                },
+                "security": [
+                    {
+                        "sanctumAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "securitySchemes": {
+            "sanctumAuth": {
+                "type": "http",
+                "bearerFormat": "JWT",
+                "scheme": "Bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth"
+        },
+        {
+            "name": "Cart",
+            "description": "Cart"
+        },
+        {
+            "name": "Catalog",
+            "description": "Catalog"
+        },
+        {
+            "name": "Media",
+            "description": "Media"
+        },
+        {
+            "name": "News",
+            "description": "News"
+        },
+        {
+            "name": "Orders",
+            "description": "Orders"
+        },
+        {
+            "name": "Profile",
+            "description": "Profile"
+        },
+        {
+            "name": "Search",
+            "description": "Search"
+        },
+        {
+            "name": "Traning",
+            "description": "Traning"
+        },
+        {
+            "name": "Tags",
+            "description": "Tags"
+        },
+        {
+            "name": "User",
+            "description": "User"
+        }
+    ]
+}
