@@ -117,10 +117,10 @@ docker compose -f compose.dev.yaml exec workspace php artisan elastic:migrate
 Откройте браузер и перейдите по [http://localhost](http://localhost).
 Swagger документация доступна по адресу [http://localhost/api/documentation](http://localhost/api/documentation)
 
-7. Запуск очередей (опционально):
+7. Запуск очередей (в env стандартно указан RabbitMQ):
 
 ```bash
-docker-compose exec workspace php artisan queue:work
+docker-compose exec workspace php artisan queue:work --queue=emails,default
 ```
 
 ## 🧪 Тестирование
