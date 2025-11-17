@@ -12,7 +12,7 @@ use App\Models\Orders\Order;
 use App\Models\Orders\OrderStatus;
 use App\Models\Orders\PayType;
 use App\Services\Media\ApiResponseService;
-use App\Services\Orders\OrderQueryServices;
+use App\Services\Orders\OrderQueryService;
 use App\Services\Orders\OrderService;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
@@ -24,9 +24,9 @@ class OrderController extends Controller
 {
 
     public function __construct(
-        private OrderService       $orderService,
-        private ApiResponseService $api,
-        private OrderQueryServices $orderQueryServ
+        private OrderService        $orderService,
+        private ApiResponseService  $api,
+        private OrderQueryService $orderQueryServ
     )
     {}
 
