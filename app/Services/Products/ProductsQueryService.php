@@ -4,6 +4,7 @@ namespace App\Services\Products;
 
 use App\Dto\Products\FilterForListDto;
 use App\Models\Products\Product;
+use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Cache;
 
 class ProductsQueryService
@@ -14,7 +15,7 @@ class ProductsQueryService
     )
     {}
 
-    public function catalogListWithFilter(FilterForListDto $dto)
+    public function catalogListWithFilter(FilterForListDto $dto): LengthAwarePaginator
     {
         $cacheKey = $this->buildCatalogCacheKey($dto);
 
@@ -24,7 +25,7 @@ class ProductsQueryService
             });
     }
 
-    private function buildCatalogListQuery(FilterForListDto $dto)
+    private function buildCatalogListQuery(FilterForListDto $dto): LengthAwarePaginator
     {
         return $this->productsListQuery
             ->applySort($dto->sort, $dto->direction)
@@ -39,7 +40,7 @@ class ProductsQueryService
         return "catalog:list:" . md5(serialize($keyData));
     }
 
-    public function getProductDetailBySlug(string $slug)
+    public function getProductDetailBySlug(string $slug): Product
     {
         $cacheKey = 'product:' . $slug;
         return Cache::tags(['catalog'])
@@ -48,7 +49,7 @@ class ProductsQueryService
             });
     }
 
-    private function buildProductDetailQuery(string $slug)
+    private function buildProductDetailQuery(string $slug): Product
     {
         return Product::with([
             'priceName',
