@@ -10,8 +10,8 @@ use App\Http\Resources\Product\CatalogIndexResource;
 use App\Http\Resources\Product\ProductDetailResource;
 use App\Models\Products\Product;
 use App\Services\Media\ApiResponseService;
-use App\Services\Products\ProductQueryService;
 use App\Services\Products\ProductService;
+use App\Services\Products\ProductsQueryService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cache;
 use OpenApi\Attributes as OA;
@@ -21,9 +21,9 @@ class CatalogController extends Controller
 {
 
     public function __construct(
-        private ApiResponseService $api,
-        private ProductService $productService,
-        private ProductQueryService  $prodQueryServ,
+        private ApiResponseService    $api,
+        private ProductService        $productService,
+        private ProductsQueryService $prodQueryServ
     ) {}
     #[OA\Get(
         path: '/v1/catalog',
@@ -70,9 +70,9 @@ class CatalogController extends Controller
 
         $dto = FilterForListDto::fromArray($filters);
 
-        $queryProduct = $this->prodQueryServ->catalogListWithFilter($dto);
+        $queryProduct1 = $this->prodQueryServ->catalogListWithFilter($dto);
 
-        return CatalogIndexResource::collection($queryProduct)
+        return CatalogIndexResource::collection($queryProduct1)
             ->additional([
             'meta' => [
                 'filters' => $dto->toArray(),

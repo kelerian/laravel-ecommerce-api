@@ -128,7 +128,7 @@ class ProductService
         return $pricesToUpdate;
     }
 
-    private function getPriceNameCollect()
+    public function getPriceNameCollect()
     {
         $cacheKey = 'priceNameCollect-'.time();
         return Cache::tags(['settings'])
