@@ -36,23 +36,7 @@ class OrderIndexRequest extends FormRequest
         ];
     }
 
-    public function validated($key = null, $default = null): array
-    {
-        $data = parent::validated($key, $default);
 
-        $data['limit'] = $data['limit'] ?? 10;
-        $data['direction'] = $data['direction'] ?? 'desc';
-        $data['sort'] = $data['sort'] ?? 'created_at';
-        $data['email'] = $data['email'] ?? false;
-        $data['user_id'] = $data['user_id'] ?? false;
-        $data['all_orders'] = filter_var($data['all_orders'] ?? false, FILTER_VALIDATE_BOOLEAN);
-        $data['pay_type'] = $data['pay_type'] ?? false;
-        $data['order_status'] = $data['order_status'] ?? false;
-        $data['date_to'] = $data['date_to'] ?? false;
-        $data['date_from'] = $data['date_from'] ?? false;
-
-        return $data;
-    }
 
     public function withValidator($validator)
     {

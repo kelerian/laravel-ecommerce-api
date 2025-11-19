@@ -20,16 +20,16 @@ class FilterForOrderListDto
     public static function fromArray(array $data): self
     {
         return new self(
-            limit: $data['limit'],
-            sort: $data['sort'],
-            direction: $data['direction'],
-            email: $data['email'],
-            userId: $data['user_id'],
-            allOrders: $data['all_orders'],
-            payType: $data['pay_type'],
-            orderStatus: $data['order_status'],
-            dateFrom: $data['date_from'],
-            dateTo: $data['date_to']
+            limit: $data['limit'] ?? 10,
+            sort: $data['sort'] ?? 'created_at',
+            direction: $data['direction'] ?? 'desc',
+            email: $data['email'] ?? false,
+            userId: $data['user_id'] ?? false,
+            allOrders: filter_var($data['all_orders'] ?? false, FILTER_VALIDATE_BOOLEAN),
+            payType: $data['pay_type'] ?? false,
+            orderStatus: $data['order_status'] ?? false,
+            dateFrom: $data['date_from'] ?? false,
+            dateTo: $data['date_to'] ?? false
         );
     }
 
