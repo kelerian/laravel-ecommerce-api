@@ -6,9 +6,6 @@ use Illuminate\Foundation\Http\FormRequest;
 
 class IndexNewsRequest extends FormRequest
 {
-    /**
-     * Determine if the user is authorized to make this request.
-     */
     public function authorize(): bool
     {
         return true;
@@ -35,20 +32,4 @@ class IndexNewsRequest extends FormRequest
         ];
     }
 
-    public function validated($key = null, $default = null): array
-    {
-        $data = parent::validated($key, $default);
-
-        $data['tags_flag'] = filter_var($data['tags_flag'] ?? false, FILTER_VALIDATE_BOOLEAN);
-        $data['page'] = $data['page'] ?? 1;
-        $data['limit'] = $data['limit'] ?? 10;
-        $data['direction'] = $data['direction'] ?? 'desc';
-        $data['sort'] = $data['sort'] ?? 'created_at';
-        $data['user_email'] = $data['user_email'] ?? false;
-        $data['tags'] = $data['tags'] ?? false;
-        $data['date_to'] = $data['date_to'] ?? false;
-        $data['date_from'] = $data['date_from'] ?? false;
-
-        return $data;
-    }
 }

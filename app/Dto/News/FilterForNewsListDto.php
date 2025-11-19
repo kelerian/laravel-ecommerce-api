@@ -19,15 +19,15 @@ class FilterForNewsListDto
     public static function fromArray(array $data): self
     {
         return new self(
-            page: $data['page'],
-            limit: $data['limit'],
-            sort: $data['sort'],
-            direction: $data['direction'],
-            tags: $data['tags'],
-            tagsFlag: $data['tags_flag'],
-            userEmail: $data['user_email'],
-            dateFrom: $data['date_from'],
-            dateTo: $data['date_to']
+            page: $data['page'] ?? 1,
+            limit: $data['limit'] ?? 10,
+            sort: $data['sort'] ?? 'created_at',
+            direction: $data['direction'] ?? 'desc',
+            tags: $data['tags'] ?? false,
+            tagsFlag: filter_var($data['tags_flag'] ?? false, FILTER_VALIDATE_BOOLEAN),
+            userEmail: $data['user_email'] ?? false,
+            dateFrom: $data['date_from'] ?? false,
+            dateTo: $data['date_to'] ?? false
         );
     }
 
