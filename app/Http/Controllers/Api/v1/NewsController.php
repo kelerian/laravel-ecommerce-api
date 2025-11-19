@@ -23,7 +23,7 @@ class NewsController extends Controller
     public function __construct(
         private ApiResponseService $api,
         private NewsServices $newsServices,
-        private NewsQueryService $newsQueryServ,
+        private NewsQueryService $newsQueryServ
     ) {}
 
     #[OA\Get(
@@ -102,7 +102,7 @@ class NewsController extends Controller
         $filters = $request->validated();
 
         $dto = FilterForNewsListDto::fromArray($filters);
-        $query = $this->newsQueryServ->newsListWithFilter($dto);
+        $query = $this->newsQueryServ->getCachedFilteredNewsList($dto);
 
         return NewsResource::collection($query)
             ->additional([
@@ -134,7 +134,7 @@ class NewsController extends Controller
     )]
     public function show(string $slug)
     {
-        $new = $this->newsQueryServ->getNewsDetailBySlug($slug);
+        $new = $this->newsQueryServ->getCachedNewsDetailBySlug($slug);
 
         return new NewsDetailResource($new);
     }

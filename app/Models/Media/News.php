@@ -7,6 +7,7 @@ use App\Models\Users\User;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\MorphMany;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Facades\Storage;
 use Laravel\Scout\Searchable as SearchableSc;
 use Elastic\ScoutDriverPlus\Searchable as SearchableEl;
@@ -27,7 +28,7 @@ class News extends Model
 
     public function toSearchableArray()
     {
-        $tagsData = $this->tags->map(function ($tag){
+        $tagsData = $this->tags->map(function ($tag) {
             return [
                 'id' => $tag->id,
                 'title' => $tag->title,
@@ -52,10 +53,12 @@ class News extends Model
     {
         return ['author', 'tags'];
     }
+
     public function shouldBeSearchable()
     {
         return $this->active == true;
     }
+
     public function searchableAs(): string
     {
         return 'news_v1';
@@ -63,18 +66,23 @@ class News extends Model
 
     public function tags()
     {
-        return $this->belongsToMany(Tag::class, 'news_tags','news_id','tag_id' )
+        return $this->belongsToMany(Tag::class, 'news_tags', 'news_id', 'tag_id')
             ->withTimestamps();
     }
 
     public function media(): MorphMany
     {
-        return $this->morphMany(Media::class,'model');
+        return $this->morphMany(Media::class, 'model');
     }
 
     public function images(): MorphMany
     {
-        return $this->media()->where('collection_name','news_image');
+        return $this->media()->where('collection_name', 'news_image');
+    }
+
+    public function scopeGetActive($query): Builder
+    {
+        return $query->where('active', true);
     }
 
     public function addTagBySlug($tags): News
@@ -101,7 +109,6 @@ class News extends Model
             ->where($field ?? $this->getRouteKeyName(), $value)
             ->firstOrFail();
     }
-
 
 
 }
