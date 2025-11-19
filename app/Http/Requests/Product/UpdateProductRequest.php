@@ -49,13 +49,6 @@ class UpdateProductRequest extends FormRequest
         $data['title'] = isset($data['title']) ? $data['title'] : null;
         $data['description'] = isset($data['description']) ? $data['description'] : null;
 
-        $data['price_opt'] = isset($data['price_opt']) ? (float)$data['price_opt'] : null;
-        $data['price_special'] = isset($data['price_special']) ? (float)$data['price_special'] : null;
-        $data['price_rozn'] = isset($data['price_rozn']) ? (float)$data['price_rozn'] : null;
-
-        $data['stock_krasnodar'] = isset($data['stock_krasnodar']) ? (int)$data['stock_krasnodar'] : null;
-        $data['stock_moskov'] = isset($data['stock_moskov']) ? (int)$data['stock_moskov'] : null;
-        $data['stock_ivanovo'] = isset($data['stock_ivanovo']) ? (int)$data['stock_ivanovo'] : null;
         return $data;
     }
 }
